@@ -1,4 +1,4 @@
-connection: "petroil"
+connection: "petroil_eon"
 
 # include all the views
 include: "/views/**/*.view"

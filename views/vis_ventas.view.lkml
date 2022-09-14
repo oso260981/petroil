@@ -1,6 +1,6 @@
 view: vis_ventas {
   derived_table: {
-    sql: SELECT * FROM `eon-internal-bigquery.POC.Ventas_petroil where nb_TipoFilial='no filial venta' `
+    sql: SELECT * FROM `eon-internal-bigquery.POC.Ventas_petroil where nb_TipoFilial='NO Filial venta' `
       ;;
   }
 

@@ -9,10 +9,7 @@ view: vis_ventas {
     drill_fields: [detail*]
   }
 
-  measure: litros {
-    type: sum
-    sql:${cantidad_litros};;
-  }
+
 
 
   dimension: nb_empresa {
@@ -364,6 +361,11 @@ view: vis_ventas {
   dimension: tipo_de_venta {
     type: string
     sql: ${TABLE}.Tipo_de_Venta ;;
+  }
+
+  measure: litros {
+    type: sum
+    sql:${cantidad_litros};;
   }
 
   set: detail {

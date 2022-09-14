@@ -1,6 +1,6 @@
 view: vis_ventas {
   derived_table: {
-    sql: SELECT * FROM `eon-internal-bigquery.POC.Ventas_petroil` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL" and nb_FamiliaProducto in ("Asfaltos")
+    sql: SELECT * FROM `eon-internal-bigquery.POC.Ventas_petroil` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL" and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       ;;
   }
 

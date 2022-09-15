@@ -1,6 +1,6 @@
 view: vis_ventas {
   derived_table: {
-    sql: SELECT * FROM `sipp-app.Tableros.Vis_Ventas` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL" and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+    sql: SELECT * FROM `sipp-app.Tableros.Vis_Ventas`
       ;;
   }
 
@@ -8,6 +8,7 @@ view: vis_ventas {
     type: count
     drill_fields: [detail*]
   }
+
 
   dimension: im_iva {
     type: number
@@ -407,6 +408,8 @@ view: vis_ventas {
       nu_orden_impresion_estaciones,
       _airbyte_ab_id,
       _airbyte_emitted_at_time
+
+
     ]
   }
 }

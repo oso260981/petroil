@@ -155,8 +155,14 @@ view: vis_ventas {
   dimension_group: local_created {
     type: time
     timeframes: [time, date, week, month]
-    sql: ${TABLE}.fh_movimiento ;;
+    sql: CONVERT_TZ(${TABLE}.fh_movimiento,'UTC','PST') ;;
     convert_tz: no
+  }
+
+  dimension_group: created {
+    type: time
+    timeframes: [time, date]
+    sql: CONVERT_TZ(${TABLE}.fh_movimiento,'UTC','PST') ;;
   }
 
   dimension: fl_movimiento {

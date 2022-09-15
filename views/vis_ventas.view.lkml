@@ -152,6 +152,13 @@ view: vis_ventas {
     sql:CAST(${TABLE}.fh_movimiento AS DATE);;
   }
 
+  dimension_group: local_created {
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${TABLE}.fh_movimiento ;;
+    convert_tz: no
+  }
+
   dimension: fl_movimiento {
     type: string
     sql: ${TABLE}.fl_Movimiento ;;

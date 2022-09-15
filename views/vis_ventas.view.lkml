@@ -341,6 +341,26 @@ view: vis_ventas {
     sql: ${TABLE}._airbyte_emitted_at ;;
   }
 
+
+
+  dimension: is_top_25 {
+    type: yesno
+    sql:
+    exists(
+    select *
+      from (
+     select nb_Cliente
+        from Vis_Ventas
+        group by nb_Cliente
+        order by sum(cantidad_litros) desc
+        limit 25
+         ) top_10
+    ) ;;
+
+
+
+  }
+
   measure: Litros {
     type: sum
     sql: ${cantidad_litros} ;;

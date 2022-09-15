@@ -348,6 +348,15 @@ view: vis_ventas {
 
   }
 
+  measure: Importe_venta {
+    label: "Importe de venta"
+    type: sum
+    sql: ${im_total} ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
 
   set: detail {
     fields: [

@@ -1,6 +1,6 @@
 view: vis_ventas {
   derived_table: {
-    sql: SELECT * FROM `sipp-app.Tableros.Vis_Ventas`
+    sql: SELECT * FROM `sipp-app.Tableros.Vis_Ventas` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL" and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       ;;
   }
 

@@ -343,7 +343,9 @@ view: vis_ventas {
   measure: Litros {
     type: sum
     sql: ${cantidad_litros} ;;
+    value_format:"#,##0.00"
     drill_fields: [detail*]
+
   }
 
 

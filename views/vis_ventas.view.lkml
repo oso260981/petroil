@@ -340,6 +340,13 @@ view: vis_ventas {
     sql: ${TABLE}._airbyte_emitted_at ;;
   }
 
+  measure: Litros {
+    type: sum
+    sql: ${cantidad_litros} ;;
+    drill_fields: [detail*]
+  }
+
+
   set: detail {
     fields: [
       im_iva,

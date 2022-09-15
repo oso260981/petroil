@@ -47,6 +47,7 @@ view: vis_ventas {
 
   dimension: nb_estado {
     type: string
+    map_layer_name: countries
     sql: ${TABLE}.nb_Estado ;;
   }
 

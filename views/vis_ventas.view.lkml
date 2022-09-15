@@ -349,7 +349,7 @@ view: vis_ventas {
     exists(
     select *
       from (
-     select nb_Cliente
+     select sum(cantidad_litros)
         from Vis_Ventas
         group by nb_Cliente
         order by sum(cantidad_litros) desc

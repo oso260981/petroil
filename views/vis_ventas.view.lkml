@@ -149,7 +149,7 @@ view: vis_ventas {
   dimension: fh_movimiento {
     type: date
 
-    sql:CAST(${TABLE}.fh_movimiento AS DATE);;
+    sql:CAST(${TABLE}.fh_movimiento AS DATETIME);;
   }
 
 

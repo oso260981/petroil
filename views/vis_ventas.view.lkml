@@ -153,22 +153,7 @@ view: vis_ventas {
   }
 
 
-  dimension_group: local_created {
-   type: time
 
-    datatype: date
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.fh_movimiento ;;
-    convert_tz: no
-  }
-
-
-  dimension: local_created2 {
-    type: date
-
-    sql: ${TABLE}.local_created.date ;;
-
-  }
 
 
   dimension_group: created {
@@ -189,7 +174,7 @@ view: vis_ventas {
 
     ]
 
-    sql: ${TABLE}.fh_movimiento ;;
+    sql: CAST(CAST(${TABLE}.fh_movimiento AS TIMESTAMP) AS DATE) ;;
   }
 
 

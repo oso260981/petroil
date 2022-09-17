@@ -147,10 +147,31 @@ view: vis_ventas {
   }
 
   dimension: fh_movimiento {
+     type: string
+
+    sql:${TABLE}.fh_movimiento;;
+  }
+
+
+  dimension_group: local_created {
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${TABLE}.fh_movimiento ;;
+    convert_tz: no
+  }
+
+
+  dimension: local_created2 {
     type: date
 
-    sql:CAST(${TABLE}.fh_movimiento AS DATETIME);;
+    sql: ${TABLE}.local_created.date ;;
+
   }
+
+
+
+
+
 
 
 
@@ -360,10 +381,7 @@ view: vis_ventas {
         limit 25
          ) top_10
     ) ;;
-
-
-
-  }
+}
 
   measure: Litros {
     type: sum

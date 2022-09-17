@@ -147,9 +147,9 @@ view: vis_ventas {
   }
 
   dimension: fh_movimiento {
-     type: string
+     type: date
 
-    sql:${TABLE}.fh_movimiento;;
+    sql: CAST(CAST(${TABLE}.fh_movimiento AS TIMESTAMP) AS DATE)    ;;
   }
 
 

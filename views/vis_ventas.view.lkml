@@ -154,7 +154,9 @@ view: vis_ventas {
 
 
   dimension_group: local_created {
-    type: time
+   type: time
+
+    datatype: date
     timeframes: [time, date, week, month]
     sql: ${TABLE}.fh_movimiento ;;
     convert_tz: no
@@ -166,6 +168,28 @@ view: vis_ventas {
 
     sql: ${TABLE}.local_created.date ;;
 
+  }
+
+
+  dimension_group: created {
+
+    type: time
+
+
+
+    timeframes: [
+
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+
+    ]
+
+    sql: ${TABLE}.fh_movimiento ;;
   }
 
 

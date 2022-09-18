@@ -397,20 +397,16 @@ view: vis_ventas {
 
   dimension: last_year{
     type: string
-    sql: extract(year from CURRENT_DATE())-2 ;;
+    sql: extract(year from CURRENT_DATE())-1 ;;
   }
 
 
-  measure: last_year_sales{
-    type: sum
-    sql:
-      CASE
-         WHEN (EXTRACT(YEAR FROM ${created_date})-1) = ${last_year}
-         THEN ${cantidad_litros}
-      END;;
-    value_format_name: decimal_0
-  }
+  measure: LitrosyearAnterior{
+     type: sum
+    sql: ${cantidad_litros} ;;
 
+    filters: [created_date: "last year"]
+  }
 
 
 

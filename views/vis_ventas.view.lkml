@@ -414,7 +414,7 @@ view: vis_ventas {
 
     type: number
 
-    sql: DATEDIFF({% date_end created_date %}, {% date_start created_date %}) ;;
+    sql: DATE_DIFF({% date_end created_date %}, {% date_start created_date %}, DAY) ;;
 
   }
   parameter: select_year {

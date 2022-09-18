@@ -395,20 +395,12 @@ view: vis_ventas {
 
   }
 
-
-  measure: LitrosyearAnterior{
-    type: sum
-    sql: if(EXTRACT(DAY FROM ${created_raw}) <= EXTRACT(DAY FROM CURRENT_TIMESTAMP()), ${cantidad_litros},0) ;;
-
-    filters: [created_date: "last year"]
+  dimension: last_year{
+    type: string
+    sql: extract(year from CURRENT_DATE())-2 ;;
   }
 
-  measure: DifLitrosyearAnterior{
-    type: number
-    sql: (${M_VentaTotal}/  NULLIF( ${LitrosyearAnterior}, 0)  )-1 ;;
-    value_format:"#,##0.00"
-    drill_fields: [detail*]
-  }
+
 
 
 

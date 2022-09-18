@@ -396,20 +396,10 @@ view: vis_ventas {
   }
 
 
-  dimension: is_ytd {
-
-    type: yesno
-    group_label: "Date Restrictions"
-    label: "Is YTD?"
-    view_label: "Dynamic Grouping & Time Comparisons"
-
-    sql:
-
-    EXTRACT (MONTH FROM ${created_date}) < EXTRACT (MONTH FROM CURRENT_TIMESTAMP)
-      OR
-      (EXTRACT (MONTH FROM ${created_date}) = EXTRACT (MONTH FROM CURRENT_TIMESTAMP)
-      AND
-      EXTRACT (DAY FROM ${created_date}) <= EXTRACT (DAY FROM CURRENT_TIMESTAMP));;
+  measure: LitrosyearAnterior{
+    type: sum
+    sql: if(EXTRACT(DAY FROM ${created_raw}) <= EXTRACT(DAY FROM CURRENT_TIMESTAMP()), ${cantidad_litros},0) ;;
+    filters: [created_date: "12 month ago"]
   }
 
 

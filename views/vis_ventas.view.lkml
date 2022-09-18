@@ -409,9 +409,17 @@ view: vis_ventas {
   }
 
 
+
+  dimension: num_days {
+
+    type: number
+
+    sql: DATEDIFF({% date_end created_date %}, {% date_start created_date %}) ;;
+
+  }
   parameter: select_year {
     type: number
-    default_value: "2021"
+    default_value: "2022"
   }
 
   measure: sale_in_selected_year {

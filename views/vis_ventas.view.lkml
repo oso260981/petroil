@@ -174,7 +174,7 @@ view: vis_ventas {
 
     ]
 
-    sql: CAST(CAST(${TABLE}.fh_movimiento AS TIMESTAMP) AS DATE) ;;
+    sql: CAST(${TABLE}.fh_movimiento AS TIMESTAMP) ;;
   }
 
 
@@ -393,6 +393,14 @@ view: vis_ventas {
 }
 
   measure: Litros {
+    type: sum
+    sql: ${cantidad_litros} ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: M_VentaTotal {
     type: sum
     sql: ${cantidad_litros} ;;
     value_format:"#,##0.00"

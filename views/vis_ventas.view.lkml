@@ -404,7 +404,7 @@ view: vis_ventas {
 
   measure: DifLitrosyearAnterior{
     type: number
-    sql: (${M_VentaTotal}/${LitrosyearAnterior})-1 ;;
+    sql: (${M_VentaTotal}/  NULLIF( ${LitrosyearAnterior}, 0)  )-1 ;;
     value_format:"#,##0.00"
     drill_fields: [detail*]
   }

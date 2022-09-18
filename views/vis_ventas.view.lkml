@@ -377,20 +377,7 @@ view: vis_ventas {
 
 
 
-  dimension: is_top_25 {
-    type: yesno
-    sql:
-    exists(
-    select *
-      from (
-     select sum(cantidad_litros)
-        from Vis_Ventas
-        group by nb_Cliente
-        order by sum(cantidad_litros) desc
-        limit 25
-         ) top_10
-    ) ;;
-}
+
 
   measure: Litros {
     type: sum
@@ -407,6 +394,27 @@ view: vis_ventas {
     drill_fields: [detail*]
 
   }
+
+
+  dimension: is_ytd {
+
+    type: yesno
+    group_label: "Date Restrictions"
+    label: "Is YTD?"
+    view_label: "Dynamic Grouping & Time Comparisons"
+
+    sql:
+
+    EXTRACT (MONTH FROM ${created_date}) < EXTRACT (MONTH FROM CURRENT_TIMESTAMP)
+      OR
+      (EXTRACT (MONTH FROM ${created_date}) = EXTRACT (MONTH FROM CURRENT_TIMESTAMP)
+      AND
+      EXTRACT (DAY FROM ${created_date}) <= EXTRACT (DAY FROM CURRENT_TIMESTAMP));;
+  }
+
+
+
+
 
   measure: Importe_venta {
     label: "Importe de venta"

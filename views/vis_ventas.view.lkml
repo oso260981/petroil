@@ -402,6 +402,13 @@ view: vis_ventas {
     filters: [created_date: "12 month ago"]
   }
 
+  measure: DifLitrosyearAnterior{
+    type: number
+    sql: (${M_VentaTotal}/${LitrosyearAnterior})-1 ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+  }
+
 
 
 

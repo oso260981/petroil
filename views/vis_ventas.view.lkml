@@ -409,6 +409,22 @@ view: vis_ventas {
   }
 
 
+  parameter: select_year {
+    type: number
+    default_value: "2021"
+  }
+
+  measure: sale_in_selected_year {
+    type: sum
+    sql: case when ${created_year} = {% parameter select_year %} then ${cantidad_litros} end ;;
+  }
+
+  measure: sale_in_previous_year {
+    type: sum
+    sql: case when ${created_year} = {% parameter select_year %}-1 then ${cantidad_litros} end ;;
+  }
+
+
 
   measure: Importe_venta {
     label: "Importe de venta"

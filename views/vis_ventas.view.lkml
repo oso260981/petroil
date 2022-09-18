@@ -401,7 +401,15 @@ view: vis_ventas {
   }
 
 
-
+  measure: last_year_sales{
+    type: sum
+    sql:
+      CASE
+         WHEN (EXTRACT(YEAR FROM ${created_date})-1) = ${last_year}
+         THEN ${cantidad_litros}
+      END;;
+    value_format_name: decimal_0
+  }
 
 
 

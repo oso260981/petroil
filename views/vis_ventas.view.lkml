@@ -387,49 +387,18 @@ view: vis_ventas {
 
   }
 
+
+
   measure: M_VentaTotal {
     type: sum
-    sql: ${cantidad_litros} ;;
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %}) then ${cantidad_litros} end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
-
   }
 
-  dimension: last_year{
-    type: string
-    sql: extract(year from CURRENT_DATE())-1 ;;
-  }
-
-
-  measure: LitrosyearAnterior{
-     type: sum
-    sql: ${cantidad_litros} ;;
-
-    filters: [created_date: "last year"]
-  }
-
-
-
-  dimension: num_days {
-
-    type: number
-
-    sql:  EXTRACT(YEAR FROM {% date_end created_date %}) ;;
-
-  }
-  parameter: select_year {
-    type: number
-    default_value: "2022"
-  }
-
-  measure: sale_in_selected_year {
+  measure: LitrosYearAnterior {
     type: sum
-    sql: case when ${created_year} = {% parameter select_year %} then ${cantidad_litros} end ;;
-  }
-
-  measure: sale_in_previous_year {
-    type: sum
-    sql: case when ${created_year} = {% parameter select_year %}-1 then ${cantidad_litros} end ;;
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${cantidad_litros} end ;;
+    value_format:"#,##0.00"
   }
 
 

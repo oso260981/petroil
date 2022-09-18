@@ -414,7 +414,7 @@ view: vis_ventas {
 
     type: number
 
-    sql: YEAR({% date_end created_date %}) ;;
+    sql:  EXTRACT(YEAR FROM {% date_end created_date %}) ;;
 
   }
   parameter: select_year {

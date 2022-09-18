@@ -401,6 +401,13 @@ view: vis_ventas {
     value_format:"#,##0.00"
   }
 
+  measure: DifLitrosyearAnterior{
+    type: number
+    sql: (${M_VentaTotal}/  NULLIF( ${LitrosYearAnterior}, 0)  )-1 ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+  }
+
 
 
   measure: Importe_venta {

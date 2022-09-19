@@ -31,6 +31,13 @@ view: top_25 {
       ;;
   }
 
+
+  dimension: nb_familia_producto {
+    label: "Familia Producto"
+    type: string
+    sql: ${TABLE}.nb_FamiliaProducto ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -86,13 +93,26 @@ view: top_25 {
     sql: ${TABLE}.rank ;;
   }
 
-  measure: Litros {
+  measure: Litros_total {
     type: sum
     sql: ${litros} ;;
     value_format:"#,##0.00"
     drill_fields: [detail*]
 
   }
+
+
+
+  measure: topLitros {
+    type: sum
+    sql: case when ${rank} <=25 then ${litros} else 0 end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+
+
 
 
   dimension_group: created {

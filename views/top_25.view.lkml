@@ -14,10 +14,12 @@ view: top_25 {
 
 
       SUM(cantidadLitros) AS litros,
-      RANK() OVER (PARTITION BY  nb_cliente ORDER BY SUM(cantidadLitros) DESC ) AS rank
+      RANK() OVER (ORDER BY SUM(cantidadLitros) DESC ) AS rank,
+      ROW_NUMBER() OVER(ORDER BY nb_cliente) AS RowNum,
+
 
       FROM `sipp-app.Tableros.Vis_Ventas`  AS ventas
-      where nb_TipoFilial="NO Filial venta" and nb_cliente not in ("CLIENTES PUBLICO EN GENERAL") and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+      where nb_TipoFilial="NO Filial venta" and nb_cliente not in ("CLIENTES PUBLICO EN GENERAL ") and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       GROUP BY
       nb_cliente,
       nb_FamiliaProducto,
@@ -31,6 +33,10 @@ view: top_25 {
       order by 10 desc
       ;;
   }
+
+
+
+
 
 
 
@@ -92,9 +98,18 @@ view: top_25 {
   }
 
   dimension: rank {
-    type: number
+
+    type: string
     sql: ${TABLE}.rank ;;
   }
+
+  dimension: RowNum {
+
+    type: number
+    sql: ${TABLE}.RowNum ;;
+  }
+
+
 
   measure: Litros_total {
     type: sum
@@ -122,6 +137,56 @@ view: top_25 {
     drill_fields: [detail*]
 
   }
+
+
+  measure: Asfaltos {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Asfaltos" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Combustoleos {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Combustoleos" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Diesel {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Diesel" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Gasolinas {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Gasolinas" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: IFO {
+    type: sum
+    sql: case when ${nb_familia_producto} ="IFO" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Lubricantes {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Lubricantes" then ${litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
 
 
 

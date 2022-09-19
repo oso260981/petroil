@@ -10,6 +10,23 @@ view: vis_ventas {
   }
 
 
+  dimension: is_top_10 {
+    type: string
+    sql:
+    exists(
+      select *
+      from (
+        select nb_cliente,sum(cantidadLitros)
+        from `sipp-app.Tableros.Vis_Ventas`
+        group by nb_cliente
+        order by sum(cantidadLitros) desc
+        limit 25
+      ) top_10
+
+    ) ;;
+  }
+
+
   dimension: im_iva {
     type: number
     sql: ${TABLE}.im_Iva ;;

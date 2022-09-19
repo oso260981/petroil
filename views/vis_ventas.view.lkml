@@ -397,7 +397,7 @@ view: vis_ventas {
 
   measure: LitrosYearAnterior {
     type: sum
-    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${cantidad_litros} end ;;
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_start created_date %})-1 then ${cantidad_litros} end ;;
     value_format:"#,##0.00"
   }
 

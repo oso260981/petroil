@@ -62,6 +62,7 @@ view: vis_ventas {
   }
 
   dimension: nb_cliente {
+    label: "Cliente"
     type: string
     sql: ${TABLE}.nb_Cliente ;;
   }
@@ -159,11 +160,7 @@ view: vis_ventas {
   dimension_group: created {
 
     type: time
-
-
-
     timeframes: [
-
       raw,
       time,
       date,
@@ -171,9 +168,7 @@ view: vis_ventas {
       month,
       quarter,
       year
-
     ]
-
     sql: CAST(${TABLE}.fh_movimiento AS TIMESTAMP) ;;
   }
 
@@ -291,6 +286,7 @@ view: vis_ventas {
   }
 
   dimension: nb_familia_producto {
+    label: "Familia Producto"
     type: string
     sql: ${TABLE}.nb_FamiliaProducto ;;
   }
@@ -396,12 +392,14 @@ view: vis_ventas {
   }
 
   measure: LitrosYearAnterior {
+
     type: sum
-    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_start created_date %})-1 then ${cantidad_litros} end ;;
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${cantidad_litros} end ;;
     value_format:"#,##0.00"
   }
 
   measure: DifLitrosyearAnterior{
+    label: "% Dif Año Anterior"
     type: number
     sql: (${M_VentaTotal}/  NULLIF( ${LitrosYearAnterior}, 0)  )-1 ;;
     value_format:"0.00%"
@@ -420,6 +418,7 @@ view: vis_ventas {
 
 
   measure: M_ImporteTotal {
+
     type: sum
     sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %}) then ${im_total} end ;;
     value_format:"#,##0.00"
@@ -432,6 +431,7 @@ view: vis_ventas {
   }
 
   measure: DifPesYearAnterior{
+    label: "% Dif Año Anterior Dinero"
     type: number
     sql: (${M_ImporteTotal}/  NULLIF( ${PesYearAnterior}, 0)  )-1 ;;
     value_format:"0.00%"

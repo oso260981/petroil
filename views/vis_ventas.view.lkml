@@ -108,6 +108,7 @@ view: vis_ventas {
   }
 
   dimension: nb_sucursal {
+    label: "Sucursal"
     type: string
     sql: ${TABLE}.nb_Sucursal ;;
   }
@@ -457,6 +458,109 @@ view: vis_ventas {
     value_format:"#,##0.00"
     drill_fields: [detail*]
 
+  }
+
+
+  dimension: field_name_1 {
+    type: string
+    sql: case when ${TABLE}.nb_estado="AGUASCALIENTES" then "21.88234"
+              when ${TABLE}.nb_estado='BAJA CALIFORNIA' then '30.52815'
+              when ${TABLE}.nb_estado='BAJA CALIFORNIA SUR' then '25.0321'
+              when ${TABLE}.nb_estado='CAMPECHE' then '18.62675'
+              when ${TABLE}.nb_estado='CHIAPAS' then '16.75973'
+              when ${TABLE}.nb_estado='CHIHUAHUA' then '28.63528'
+              when ${TABLE}.nb_estado='CIUDAD DE MÉXICO' then '19.42847'
+              when ${TABLE}.nb_estado='COAHUILA DE ZARAGOZA' then '25.42321'
+              when ${TABLE}.nb_estado='COLIMA' then '19.24997'
+              when ${TABLE}.nb_estado='DURANGO' then '24.02032'
+              when ${TABLE}.nb_estado='GUANAJUATO' then '20.52353'
+              when ${TABLE}.nb_estado='HIDALGO' then '20.11697'
+              when ${TABLE}.nb_estado='JALISCO' then '20.66682'
+              when ${TABLE}.nb_estado='MICHOACÁN DE OCAMPO' then '19.70078'
+              when ${TABLE}.nb_estado='MORELOS' then '18.9261'
+              when ${TABLE}.nb_estado='MÉXICO' then '19.60492'
+when ${TABLE}.nb_estado='NAYARIT' then '21.50951'
+when ${TABLE}.nb_estado='NUEVO LEÓN' then '25.67507'
+when ${TABLE}.nb_estado='OAXACA' then '17.06542'
+when ${TABLE}.nb_estado='PUEBLA' then '19.03793'
+when ${TABLE}.nb_estado='QUERÉTARO' then '20.58806'
+when ${TABLE}.nb_estado='QUINTANA ROO' then '21.17429'
+when ${TABLE}.nb_estado='SAN LUIS POTOSÍ' then '22.14982'
+when ${TABLE}.nb_estado='SINALOA' then '23.2329'
+when ${TABLE}.nb_estado='SONORA' then '29.1026'
+when ${TABLE}.nb_estado='TAMAULIPAS' then '22.92157'
+when ${TABLE}.nb_estado='TLAXCALA' then '19.31905'
+when ${TABLE}.nb_estado='VERACRUZ DE IGNACIO DE LA LLAVE' then '19.18095'
+when ${TABLE}.nb_estado='YUCATÁN' then '20.97537'
+when ${TABLE}.nb_estado='ZACATECAS' then '22.76843'
+
+
+
+
+
+
+
+
+
+
+
+
+      else "23.634501" end ;;
+  }
+
+  dimension: field_name_2 {
+    type: string
+     sql: case when ${TABLE}.nb_estado="AGUASCALIENTES" then "-102.28259"
+               when ${TABLE}.nb_estado='BAJA CALIFORNIA' then '-115.92617'
+               when ${TABLE}.nb_estado='BAJA CALIFORNIA SUR' then '-111.66256'
+               when ${TABLE}.nb_estado='CAMPECHE' then '-90.13584'
+               when ${TABLE}.nb_estado='CHIAPAS' then '-93.11308'
+               when ${TABLE}.nb_estado='CHIHUAHUA' then '-106.08889'
+               when ${TABLE}.nb_estado='CIUDAD DE MÉXICO' then '-99.12766'
+               when ${TABLE}.nb_estado='COAHUILA DE ZARAGOZA' then '-101.0053'
+               when ${TABLE}.nb_estado='COLIMA' then '-103.72714'
+               when ${TABLE}.nb_estado='DURANGO' then '-104.65756'
+               when ${TABLE}.nb_estado='GUANAJUATO' then '-100.8157'
+               when ${TABLE}.nb_estado='HIDALGO' then '-98.73329'
+               when ${TABLE}.nb_estado='JALISCO' then '-103.39182'
+               when ${TABLE}.nb_estado='MICHOACÁN DE OCAMPO' then '-101.18443'
+               when ${TABLE}.nb_estado='MORELOS' then '-99.23075'
+              when ${TABLE}.nb_estado='MÉXICO' then '-99.06064'
+when ${TABLE}.nb_estado='NAYARIT' then '-104.89569'
+when ${TABLE}.nb_estado='NUEVO LEÓN' then '-100.31847'
+when ${TABLE}.nb_estado='OAXACA' then '-96.72365'
+when ${TABLE}.nb_estado='PUEBLA' then '-98.20346'
+when ${TABLE}.nb_estado='QUERÉTARO' then '-100.38806'
+when ${TABLE}.nb_estado='QUINTANA ROO' then '-86.84656'
+when ${TABLE}.nb_estado='SAN LUIS POTOSÍ' then '-100.97916'
+when ${TABLE}.nb_estado='SINALOA' then '-106.4062'
+when ${TABLE}.nb_estado='SONORA' then '-110.97732'
+when ${TABLE}.nb_estado='TAMAULIPAS' then '-98.07519'
+when ${TABLE}.nb_estado='TLAXCALA' then '-98.19982'
+when ${TABLE}.nb_estado='VERACRUZ DE IGNACIO DE LA LLAVE' then '-96.1429'
+when ${TABLE}.nb_estado='YUCATÁN' then '-89.61696'
+when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
+
+
+
+
+
+
+
+
+
+
+
+      else "-102.552784" end ;;
+  }
+
+
+
+  dimension: map {
+    type: location
+    sql_latitude:${field_name_1} ;;
+    sql_longitude:${field_name_2} ;;
+    drill_fields: [detail*]
   }
 
 

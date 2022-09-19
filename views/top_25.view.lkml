@@ -3,7 +3,7 @@ view: top_25 {
     sql: SELECT
 
       nb_cliente,
-      nb_FamiliaProducto
+      nb_FamiliaProducto,
       fh_movimiento,
       nb_TipoDeNegocio,
       nb_Sucursal,
@@ -14,9 +14,10 @@ view: top_25 {
 
 
       SUM(cantidadLitros) AS litros,
-      RANK() OVER (ORDER BY SUM(cantidadLitros) DESC) AS rank
+      RANK() OVER (PARTITION BY  nb_cliente ORDER BY SUM(cantidadLitros) DESC ) AS rank
 
       FROM `sipp-app.Tableros.Vis_Ventas`  AS ventas
+      where nb_TipoFilial="NO Filial venta" and nb_cliente not in ("CLIENTES PUBLICO EN GENERAL") and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       GROUP BY
       nb_cliente,
       nb_FamiliaProducto,
@@ -27,16 +28,12 @@ view: top_25 {
       nb_GrupoCliente,
       nb_Vendedor,
       nb_Empresa
-      order by 9 desc
+      order by 10 desc
       ;;
   }
 
 
-  dimension: nb_familia_producto {
-    label: "Familia Producto"
-    type: string
-    sql: ${TABLE}.nb_FamiliaProducto ;;
-  }
+
 
   measure: count {
     type: count
@@ -46,6 +43,12 @@ view: top_25 {
   dimension: nb_cliente {
     type: string
     sql: ${TABLE}.nb_cliente ;;
+  }
+
+  dimension: nb_familia_producto {
+    label: "Familia Producto"
+    type: string
+    sql: ${TABLE}.nb_FamiliaProducto ;;
   }
 
   dimension: fh_movimiento {
@@ -102,10 +105,19 @@ view: top_25 {
   }
 
 
+  measure: rank_total {
+    type: number
+    sql: ${rank} ;;
+
+    drill_fields: [detail*]
+
+  }
+
+
 
   measure: topLitros {
     type: sum
-    sql: case when ${rank} <=25 then ${litros} else 0 end ;;
+    sql: case when ${rank} <=25 then ${litros}  end ;;
     value_format:"#,##0.00"
     drill_fields: [detail*]
 

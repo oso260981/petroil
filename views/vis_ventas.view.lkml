@@ -431,7 +431,7 @@ view: vis_ventas {
     value_format:"#,##0.00"
   }
 
-  measure: DifPesyearAnterior{
+  measure: DifPesYearAnterior{
     type: number
     sql: (${M_ImporteTotal}/  NULLIF( ${PesYearAnterior}, 0)  )-1 ;;
     value_format:"0.00%"

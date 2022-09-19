@@ -86,6 +86,14 @@ view: top_25 {
     sql: ${TABLE}.rank ;;
   }
 
+  measure: Litros {
+    type: sum
+    sql: ${litros} ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
   set: detail {
     fields: [
       nb_cliente,

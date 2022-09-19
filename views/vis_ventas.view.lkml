@@ -409,15 +409,44 @@ view: vis_ventas {
 
     html: {% if value < 0  %}
 
-    <p style="color: red;  font-size:100%; text-align:center"> {{ rendered_value }}</p>
+    <p style="color: red;  font-size:100%; text-align:center">{{ rendered_value }}<img src="https://cdn-icons-png.flaticon.com/512/595/595007.png" height=15 width=15>  </p>
 
     {% elsif value >= 0 %}  <p style="color: green; font-size:100%; text-align:center">
-    {{ rendered_value }}
+    {{ rendered_value }}  <img src="https://cdn-icons-png.flaticon.com/512/1200/1200882.png" height=15 width=15></p>
 
     {% endif %};;
 
-
   }
+
+
+  measure: M_ImporteTotal {
+    type: sum
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %}) then ${im_total} end ;;
+    value_format:"#,##0.00"
+  }
+
+  measure: PesYearAnterior {
+    type: sum
+    sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${im_total} end ;;
+    value_format:"#,##0.00"
+  }
+
+  measure: DifPesyearAnterior{
+    type: number
+    sql: (${M_ImporteTotal}/  NULLIF( ${PesYearAnterior}, 0)  )-1 ;;
+    value_format:"0.00%"
+    drill_fields: [detail*]
+
+    html: {% if value < 0  %}
+
+          <p style="color: red;  font-size:100%; text-align:center">{{ rendered_value }}<img src="https://cdn-icons-png.flaticon.com/512/595/595007.png" height=15 width=15>  </p>
+
+          {% elsif value >= 0 %}  <p style="color: green; font-size:100%; text-align:center">
+          {{ rendered_value }}  <img src="https://cdn-icons-png.flaticon.com/512/1200/1200882.png" height=15 width=15></p>
+
+          {% endif %};;
+
+    }
 
 
 

@@ -94,6 +94,23 @@ view: top_25 {
 
   }
 
+
+  dimension_group: created {
+
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: CAST(${TABLE}.fh_movimiento AS TIMESTAMP) ;;
+  }
+
+
   set: detail {
     fields: [
       nb_cliente,

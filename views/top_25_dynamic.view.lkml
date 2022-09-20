@@ -40,6 +40,16 @@ view: top_25_dynamic {
     sql: ${TABLE}.rank ;;
   }
 
+  dimension: cantidadLitros {
+    type:  number
+    sql: ${TABLE}.cantidadLitros  ;;
+  }
+
+  measure: totalLitros {
+    type: sum
+    sql: ${cantidadLitros}  ;;
+  }
+
 
 #  derived_table: {
 #    sql:

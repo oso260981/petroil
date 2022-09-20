@@ -1,6 +1,7 @@
 view: vis_ventas {
   derived_table: {
-    sql: SELECT *,RANK() OVER (ORDER BY SUM(cantidadLitros) DESC ) AS rank FROM `sipp-app.Tableros.Vis_Ventas` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL " and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+    sql: SELECT *,ROW_NUMBER() OVER(
+       ORDER BY nb_Cliente) AS RowNum FROM `sipp-app.Tableros.Vis_Ventas` where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL " and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       ;;
   }
 
@@ -11,7 +12,7 @@ view: vis_ventas {
 
 
   dimension: is_top_10 {
-    type: string
+   type: yesno
     sql:
     exists(
       select *
@@ -26,6 +27,10 @@ view: vis_ventas {
     ) ;;
   }
 
+  dimension: RowNum {
+    type: number
+    sql: ${TABLE}.RowNum ;;
+  }
 
   dimension: im_iva {
     type: number

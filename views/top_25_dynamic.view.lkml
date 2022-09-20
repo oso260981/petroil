@@ -2,6 +2,7 @@ view: top_25_dynamic {
   derived_table: {
     sql:
       select nb_Cliente as Cliente,
+      nb_FamiliaProducto,
       sum(cantidadLitros) as condicion,
       rank() over (order by sum(cantidadLitros) desc) as rank
       from `sipp-app.Tableros.Vis_Ventas`  AS ventas
@@ -10,7 +11,7 @@ view: top_25_dynamic {
         nb_TipoFilial="NO Filial venta" and
         nb_cliente !="CLIENTES PUBLICO EN GENERAL "
         and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
-      group by 1
+      group by 1,2
       ;;
   }
 
@@ -21,6 +22,10 @@ view: top_25_dynamic {
   dimension: Cliente {
     primary_key: yes
     sql: ${TABLE}.Cliente ;;
+  }
+
+  dimension: Familia_Producto {
+    sql: ${TABLE}.nb_FamiliaProducto ;;
   }
 
   dimension: rank {

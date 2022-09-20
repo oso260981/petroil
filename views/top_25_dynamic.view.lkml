@@ -6,7 +6,10 @@ view: top_25_dynamic {
       rank() over (order by sum(cantidadLitros) desc) as rank
       from `sipp-app.Tableros.Vis_Ventas`  AS ventas
       where
-        {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %}
+        {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %} and
+        nb_TipoFilial="NO Filial venta" and
+        nb_cliente !="CLIENTES PUBLICO EN GENERAL "
+        and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
       group by 1
       ;;
   }

@@ -4,7 +4,7 @@ view: top_25_dynamic {
       select nb_Cliente as Cliente,
       nb_FamiliaProducto,
       sum(cantidadLitros) as condicion,
-      rank() over (order by sum(cantidadLitros) desc) as rank
+      rank() over (partition by nb_Cliente order by sum(cantidadLitros) desc) as rank
       from `sipp-app.Tableros.Vis_Ventas`  AS ventas
       where
         {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %} and

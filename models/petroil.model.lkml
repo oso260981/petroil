@@ -11,4 +11,3 @@ datagroup: petroil_default_datagroup {
 persist_with: petroil_default_datagroup
 
 explore: vis_ventas {}
-explore: top_25 {}

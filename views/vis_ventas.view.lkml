@@ -560,15 +560,6 @@ when ${TABLE}.nb_estado='YUCATÁN' then '-89.61696'
 when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
 
 
-
-
-
-
-
-
-
-
-
       else "-102.552784" end ;;
   }
 
@@ -580,6 +571,68 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     sql_longitude:${field_name_2} ;;
     drill_fields: [detail*]
   }
+
+
+
+  measure: Asfaltos {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Asfaltos" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Combustoleos {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Combustoleos" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Diesel {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Diesel" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Gasolinas {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Gasolinas" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: IFO {
+    type: sum
+    sql: case when ${nb_familia_producto} ="IFO" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+  measure: Lubricantes {
+    type: sum
+    sql: case when ${nb_familia_producto} ="Lubricantes" then ${cantidad_litros}  end ;;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+
+  measure: Total_litros {
+    type: number
+    sql: ${Asfaltos}+ ${Combustoleos}+${Diesel}+${Gasolinas}+${IFO}+${Lubricantes};;
+    value_format:"#,##0.00"
+    drill_fields: [detail*]
+
+  }
+
+
+
 
 
   set: detail {

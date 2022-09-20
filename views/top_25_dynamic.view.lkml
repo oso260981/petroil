@@ -12,7 +12,7 @@ view: top_25_dynamic {
   }
 
   filter: rank_date_filter {
-    type: date
+    type: date_time
   }
 
   dimension: Cliente {

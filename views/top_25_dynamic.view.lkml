@@ -1,17 +1,24 @@
 view: top_25_dynamic {
   derived_table: {
     sql:
-      select nb_Cliente as Cliente,
-      nb_FamiliaProducto,
-      sum(cantidadLitros) as condicion,
-      rank() over (partition by nb_Cliente order by sum(cantidadLitros) desc) as rank
-      from `sipp-app.Tableros.Vis_Ventas`  AS ventas
-      where
-        {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %} and
+      select ventas1.*, ranking.rank from (
+        select * from `sipp-app.Tableros.Vis_Ventas`  AS ventas
+        where
         nb_TipoFilial="NO Filial venta" and
         nb_cliente !="CLIENTES PUBLICO EN GENERAL "
-        and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
-      group by 1,2
+        and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")) as ventas1
+        join (
+        select nb_Cliente as Cliente,
+        sum(cantidadLitros) as condicion,
+        rank() over (order by sum(cantidadLitros) desc) as rank
+        from `sipp-app.Tableros.Vis_Ventas`  AS ventas
+        where
+          {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %} and
+          nb_TipoFilial="NO Filial venta" and
+          nb_cliente !="CLIENTES PUBLICO EN GENERAL "
+          and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+        group by 1) as ranking
+        on ventas1.nb_Cliente = ranking.Cliente
       ;;
   }
 
@@ -21,7 +28,7 @@ view: top_25_dynamic {
 
   dimension: Cliente {
     primary_key: yes
-    sql: ${TABLE}.Cliente ;;
+    sql: ${TABLE}.nb_Cliente ;;
   }
 
   dimension: Familia_Producto {
@@ -33,15 +40,6 @@ view: top_25_dynamic {
     sql: ${TABLE}.rank ;;
   }
 
-  dimension: CantidadLitros {
-    type: number
-    sql: ${TABLE}.condicion ;;
-  }
-
-  measure: cantidad_Litros {
-    type: sum
-    sql: ${CantidadLitros} ;;
-  }
 
 #  derived_table: {
 #    sql:

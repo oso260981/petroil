@@ -6,7 +6,7 @@ view: top_25_dynamic {
       rank() over (order by sum(cantidadLitros) desc) as rank
       from `sipp-app.Tableros.Vis_Ventas`  AS ventas
       where
-        {% condition rank_date_filter %} ventas.fh_movimiento {% endcondition %}
+        {% condition rank_date_filter %} CAST(ventas.fh_movimiento as DATETIME) {% endcondition %}
       group by 1
       ;;
   }

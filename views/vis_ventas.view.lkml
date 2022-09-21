@@ -198,9 +198,6 @@ view: vis_ventas {
   }
 
 
-
-
-
   dimension_group: created {
 
     type: time
@@ -216,14 +213,6 @@ view: vis_ventas {
     ]
     sql: CAST(${TABLE}.fh_movimiento AS TIMESTAMP) ;;
   }
-
-
-
-
-
-
-
-
 
   dimension: fl_movimiento {
     type: string

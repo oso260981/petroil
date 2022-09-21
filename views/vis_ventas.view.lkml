@@ -20,13 +20,33 @@ view: vis_ventas {
         select nb_cliente,sum(cantidadLitros)
         from `sipp-app.Tableros.Vis_Ventas`
         where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL " and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+        and ((( CAST(fh_movimiento AS TIMESTAMP)  ) >= (TIMESTAMP({% date_start created_date %})) AND ( CAST(fh_movimiento AS TIMESTAMP)  ) < (TIMESTAMP({% date_end created_date %}))))
         group by nb_cliente
         order by sum(cantidadLitros) desc
-        limit 13
+        limit 10
       ) top_10
        where ${nb_cliente} = top_10.nb_cliente
     ) ;;
   }
+
+  dimension: is_top_25 {
+    type: yesno
+    sql:
+    exists(
+      select *
+      from (
+        select nb_cliente,sum(cantidadLitros)
+        from `sipp-app.Tableros.Vis_Ventas`
+        where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL " and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
+        and ((( CAST(fh_movimiento AS TIMESTAMP)  ) >= (TIMESTAMP({% date_start created_date %})) AND ( CAST(fh_movimiento AS TIMESTAMP)  ) < (TIMESTAMP({% date_end created_date %}))))
+        group by nb_cliente
+        order by sum(cantidadLitros) desc
+        limit 25
+      ) top_25
+       where ${nb_cliente} = top_25.nb_cliente
+    ) ;;
+  }
+
 
   dimension: RowNum {
     type: number

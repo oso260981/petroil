@@ -688,7 +688,8 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
 
   measure: Alcance {
     type: number
-    sql: ${top25_seleccion}/NULLIF (${Total_litros},0);;
+    sql: ${Litros_top25}/NULLIF (${Total_litros},0);;
+    value_format:"0.00%"
   }
 
 

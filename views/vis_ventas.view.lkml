@@ -429,6 +429,27 @@ view: vis_ventas {
   }
 
 
+  dimension: top25_seleccion {
+
+    type: number
+
+    sql:
+    CASE
+      WHEN ${is_top_25} IS TRUE THEN ${cantidad_litros}
+      ELSE 0
+      END;;
+
+  }
+
+
+  measure: Litros_top25 {
+    type: sum
+    sql: ${top25_seleccion} ;;
+  }
+
+
+
+
 
   measure: M_VentaTotal {
     type: sum
@@ -665,6 +686,10 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
   }
 
 
+  measure: Alcance {
+    type: number
+    sql: ${top25_seleccion}/NULLIF (${Total_litros},0);;
+  }
 
 
 

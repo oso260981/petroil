@@ -19,11 +19,12 @@ view: vis_ventas {
       from (
         select nb_cliente,sum(cantidadLitros)
         from `sipp-app.Tableros.Vis_Ventas`
+        where nb_TipoFilial="NO Filial venta" and nb_cliente !="CLIENTES PUBLICO EN GENERAL " and nb_FamiliaProducto in ("Asfaltos","Diesel","Combustoleos","Lubricantes","IFO","Gasolinas")
         group by nb_cliente
         order by sum(cantidadLitros) desc
-        limit 25
+        limit 13
       ) top_10
-
+       where ${nb_cliente} = top_10.nb_cliente
     ) ;;
   }
 

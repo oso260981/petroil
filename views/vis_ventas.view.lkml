@@ -156,6 +156,8 @@ view: vis_ventas {
     label: "Sucursal"
     type: string
     sql: ${TABLE}.nb_Sucursal ;;
+
+
     drill_fields: [created_month,Litros]
 
   }

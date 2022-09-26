@@ -89,9 +89,11 @@ view: vis_ventas {
   }
 
   dimension: nb_estado {
+    label: "Estado"
     type: string
-    map_layer_name: countries
+
     sql: ${TABLE}.nb_Estado ;;
+
   }
 
   dimension: de_estatus {
@@ -154,6 +156,8 @@ view: vis_ventas {
     label: "Sucursal"
     type: string
     sql: ${TABLE}.nb_Sucursal ;;
+    drill_fields: [created_month,Litros]
+
   }
 
   dimension: nb_vendedor {
@@ -199,7 +203,7 @@ view: vis_ventas {
 
 
   dimension_group: created {
-
+    label: "Periodo"
     type: time
     timeframes: [
       raw,
@@ -212,6 +216,7 @@ view: vis_ventas {
       year
     ]
     sql: CAST(${TABLE}.fh_movimiento AS TIMESTAMP) ;;
+
   }
 
   dimension: fl_movimiento {
@@ -368,6 +373,8 @@ view: vis_ventas {
   dimension: nb_familia_tablero_ventas {
     type: string
     sql: ${TABLE}.nb_FamiliaTableroVentas ;;
+    drill_fields: [created_month,Litros]
+
   }
 
   dimension: nb_tipo_vendedor_heredado {
@@ -413,9 +420,28 @@ view: vis_ventas {
     type: sum
     sql: ${cantidad_litros} ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+
+    drill_fields: [created_month,Litros]
 
   }
+
+
+  measure: Litros_map {
+    label: "Litros"
+    type: sum
+    sql: ${cantidad_litros} ;;
+    value_format:"#,##0.00"
+
+
+
+  }
+
+
+
+
+
+
+
 
 
   dimension: top25_seleccion {
@@ -444,6 +470,7 @@ view: vis_ventas {
     type: sum
     sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %}) then ${cantidad_litros} end ;;
     value_format:"#,##0.00"
+    drill_fields: [created_month,Litros]
   }
 
   measure: LitrosYearAnterior {
@@ -451,6 +478,7 @@ view: vis_ventas {
     type: sum
     sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${cantidad_litros} end ;;
     value_format:"#,##0.00"
+    drill_fields: [created_month,Litros]
   }
 
   measure: DifLitrosyearAnterior{
@@ -458,7 +486,7 @@ view: vis_ventas {
     type: number
     sql: (${M_VentaTotal}/  NULLIF( ${LitrosYearAnterior}, 0)  )-1 ;;
     value_format:"0.00%"
-    drill_fields: [detail*]
+    drill_fields: [created_month,Litros]
 
     html: {% if value < 0  %}
 
@@ -469,6 +497,7 @@ view: vis_ventas {
 
     {% endif %};;
 
+
   }
 
 
@@ -477,12 +506,14 @@ view: vis_ventas {
     type: sum
     sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %}) then ${im_total} end ;;
     value_format:"#,##0.00"
+    drill_fields: [created_month,Litros]
   }
 
   measure: PesYearAnterior {
     type: sum
     sql: case when ${created_year} =  EXTRACT(YEAR FROM {% date_end created_date %})-1 then ${im_total} end ;;
     value_format:"#,##0.00"
+    drill_fields: [created_month,Litros]
   }
 
   measure: DifPesYearAnterior{
@@ -490,7 +521,7 @@ view: vis_ventas {
     type: number
     sql: (${M_ImporteTotal}/  NULLIF( ${PesYearAnterior}, 0)  )-1 ;;
     value_format:"0.00%"
-    drill_fields: [detail*]
+    drill_fields: [created_month,Litros]
 
     html: {% if value < 0  %}
 
@@ -510,7 +541,7 @@ view: vis_ventas {
     type: sum
     sql: ${im_total} ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+    drill_fields: [created_month,Litros]
 
   }
 
@@ -548,18 +579,8 @@ when ${TABLE}.nb_estado='VERACRUZ DE IGNACIO DE LA LLAVE' then '19.18095'
 when ${TABLE}.nb_estado='YUCATÁN' then '20.97537'
 when ${TABLE}.nb_estado='ZACATECAS' then '22.76843'
 
-
-
-
-
-
-
-
-
-
-
-
       else "23.634501" end ;;
+
   }
 
   dimension: field_name_2 {
@@ -597,6 +618,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
 
 
       else "-102.552784" end ;;
+
   }
 
 
@@ -605,7 +627,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: location
     sql_latitude:${field_name_1} ;;
     sql_longitude:${field_name_2} ;;
-    drill_fields: [detail*]
+
   }
 
 
@@ -614,7 +636,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="Asfaltos" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -622,7 +644,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="Combustoleos" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+    drill_fields: [created_month,Litros]
 
   }
 
@@ -630,7 +652,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="Diesel" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -638,7 +660,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="Gasolinas" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -646,7 +668,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="IFO" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -654,7 +676,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: sum
     sql: case when ${nb_familia_producto} ="Lubricantes" then ${cantidad_litros}  end ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -663,7 +685,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: number
     sql: ${Diesel}+${Lubricantes} ;;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+    drill_fields: [created_month,Litros]
 
   }
 
@@ -671,7 +693,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: number
     sql: ${Asfaltos}+ ${Combustoleos}+${Diesel}+${Gasolinas}+${IFO}+${Lubricantes};;
     value_format:"#,##0.00"
-    drill_fields: [detail*]
+     drill_fields: [created_month,Litros]
 
   }
 
@@ -680,6 +702,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
     type: number
     sql: ${Litros_top25}/NULLIF (${Total_litros},0);;
     value_format:"0.00%"
+    drill_fields: [created_month,Litros]
   }
 
 

@@ -157,7 +157,6 @@ view: vis_ventas {
     type: string
     sql: ${TABLE}.nb_Sucursal ;;
 
-
     drill_fields: [created_month,Litros]
 
   }
@@ -422,6 +421,8 @@ view: vis_ventas {
     type: sum
     sql: ${cantidad_litros} ;;
     value_format:"#,##0.00"
+
+
 
     drill_fields: [created_month,Litros]
 

@@ -13,6 +13,7 @@ persist_with: petroil_default_datagroup
 
 explore: usuario_petroil {
 
+
   sql_always_where: ${usuario_petroil.usuario}='{{ _user_attributes['email'] }}' ;;
 
   join: vis_ventas {
@@ -24,4 +25,14 @@ explore: usuario_petroil {
 
 }
 
-explore: vis_ventas {}
+explore: vis_ventas {
+
+  join: usuario_petroil {
+    view_label: "usuario"
+    type: left_outer
+    sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente} and ${usuario_petroil.usuario}='{{ _user_attributes['email'] }}' ;;
+
+    relationship: many_to_one
+  }
+
+}

@@ -684,7 +684,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
   }
 
   measure: grupo_Diesel{
-    label: "Diesel"
+    label: "Diesel agrupado"
     type: number
     sql: ${Diesel}+${Lubricantes} ;;
     value_format:"#,##0.00"

@@ -15,8 +15,8 @@ explore: vis_ventas {
 
   join: usuario_petroil {
     view_label: "usuario"
-    type: inner
-    sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente} and ${usuario_petroil.usuario}='maria.granados@grupo-eon.com' ;;
+    type: full_outer
+    sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente} and ${usuario_petroil.usuario}='rperez@petroil.com.mx' ;;
 
     relationship: many_to_one
     }

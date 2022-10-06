@@ -23,3 +23,7 @@ explore: vis_ventas {
 
 
 }
+
+explore: usuario_petroil {
+  sql_always_where: ${usuario_petroil.usuario}='{{ _user_attributes['email'] }}' ;;
+}

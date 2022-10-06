@@ -430,7 +430,7 @@ view: vis_ventas {
 
 
   measure: Litros_map {
-    label: "Litros"
+    label: "Litros_m"
     type: sum
     sql: ${cantidad_litros} ;;
     value_format:"#,##0.00"

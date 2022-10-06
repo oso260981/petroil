@@ -16,14 +16,9 @@ explore: vis_ventas {
   join: usuario_petroil {
     view_label: "usuario"
     type: inner
-    sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente};;
+    sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente} and ${usuario_petroil.usuario}='{{ _user_attributes['Email'] }}' ;;
 
     relationship: many_to_one
     }
 
-
-}
-
-explore: usuario_petroil {
-  sql_always_where: ${usuario_petroil.usuario}='{{ _user_attributes['email'] }}' ;;
 }

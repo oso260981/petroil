@@ -3,7 +3,7 @@ view: usuario_petroil {
     sql: SELECT id_Cliente,nb_cliente,case when id_Cliente between 1 and 40 then 'maria.granados@grupo-eon.com'
                                   when id_Cliente between 41 and 100 then 'rperez@petroil.com.mx'
                                   when id_Cliente between 101 and 500 then 'luis.hernandez@grupo-eon.com'
-                                  when id_Cliente between >500 then'israel.santos@eon.com.mx' end usuario FROM `sipp-app.Tableros.Vis_Ventas` group by id_Cliente,nb_cliente order by id_cliente LIMIT 100
+                                  when id_Cliente  >500 then 'israel.santos@eon.com.mx' end usuario FROM `sipp-app.Tableros.Vis_Ventas` group by id_Cliente,nb_cliente order by id_cliente LIMIT 100
  ;;
   }
 

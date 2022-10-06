@@ -15,7 +15,7 @@ explore: vis_ventas {
 
   join: usuario_petroil {
     view_label: "usuario"
-    type: left_outer
+    type: inner
     sql_on: ${vis_ventas.id_cliente}=${usuario_petroil.id_cliente};;
 
     relationship: many_to_one

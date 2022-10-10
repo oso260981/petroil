@@ -635,6 +635,20 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
 
 
 
+
+  measure: asa_Combus_prueba {
+    type: number
+    sql: ${Diesel}+${Lubricantes} ;;
+    value_format:"#,##0.00"
+
+
+
+    drill_fields: [created_month,Litros]
+
+  }
+
+
+
   measure: Asfaltos {
     type: sum
     sql: case when ${nb_familia_producto} ="Asfaltos" then ${cantidad_litros}  end ;;

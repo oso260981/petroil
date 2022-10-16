@@ -78,10 +78,10 @@ view: vis_ventas {
     sql: ${TABLE}.nb_Zona ;;
   }
 
-  dimension: nu_anio {
-    type: number
-    sql: ${TABLE}.nu_Anio ;;
-  }
+ # dimension: nu_anio {
+  #  type: number
+  #  sql: ${TABLE}.nu_Anio ;;
+  #}
 
   dimension: im_total {
     type: number
@@ -716,7 +716,7 @@ when ${TABLE}.nb_estado='ZACATECAS' then '-102.58141'
       nu_mes,
       nb_pais,
       nb_zona,
-      nu_anio,
+
       im_total,
       nb_estado,
       de_estatus,
